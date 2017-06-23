@@ -1,0 +1,63 @@
+%% Fixing electrode labels in EEGLAB
+% Version 1.0 beta
+%
+% 23.05.2017
+% Micha³ Komorowski, MSc
+%
+% Nicolaus Copernicus University in Toruñ
+% Faculty of Physics, Astronomy and Informatics
+% Department of Informatics;
+% Neurocognitive Laboratory
+% Centre for Modern Interdisciplinary Technologies
+%
+% PROBLEM: Unable to properly lookup channel locs for 64-channel Acticap
+%          EEG system (Brain Products)
+% REASON: After loading a particular dataset to eeglab, in the
+%         EEG.chanlocs.labels each label has to much length due to trailing
+%         whitespaces (e.g. 'Fp1         ').
+%         This makes confusion for eeglab look up locs procedure.
+% SOLUTION: You can check labels length in your dataset by typing:
+%
+%           cellfun(@length, {EEG.chanlocs.labels})
+%
+%           If so, run this script below which removes trailing whitespaces
+%           from labels.
+%
+% -------------------------------------------------------------------------
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation; either version 3 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program; if not, write to the Free Software
+% Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+% -------------------------------------------------------------------------
+
+if(~exist('EEG','var'))
+    error('There is no proper EEG structure in workspace. Please use EEGLAB to load a dataset first !')
+end
+
+disp('Labels length BEFORE correction:')
+A = cellfun(@length,{EEG.chanlocs.labels})
+
+for ii = 1:length(EEG.chanlocs)
+    
+    a = EEG.chanlocs(ii).labels;
+    a(find(ismember(a,' '))) = [];
+    EEG.chanlocs(ii).labels = a;
+    
+end
+
+disp('Labels length AFTER correction:');
+A = cellfun(@length,{EEG.chanlocs.labels})
+
+clear A ii a
+
+
+
