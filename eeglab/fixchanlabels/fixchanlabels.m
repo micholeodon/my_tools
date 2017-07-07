@@ -2,9 +2,9 @@
 % Version 1.0 beta
 %
 % 23.05.2017
-% Micha³ Komorowski, MSc
+% MichaÂ³ Komorowski, MSc
 %
-% Nicolaus Copernicus University in Toruñ
+% Nicolaus Copernicus University in ToruÃ±
 % Faculty of Physics, Astronomy and Informatics
 % Department of Informatics;
 % Neurocognitive Laboratory
@@ -46,18 +46,18 @@ end
 disp('Labels length BEFORE correction:')
 A = cellfun(@length,{EEG.chanlocs.labels})
 
-for ii = 1:length(EEG.chanlocs)
+for chanidx = 1:length(EEG.chanlocs)
     
-    a = EEG.chanlocs(ii).labels;
+    a = EEG.chanlocs(chanidx).labels;
     a(find(ismember(a,' '))) = [];
-    EEG.chanlocs(ii).labels = a;
+    EEG.chanlocs(chanidx).labels = a;
     
 end
 
 disp('Labels length AFTER correction:');
 A = cellfun(@length,{EEG.chanlocs.labels})
 
-clear A ii a
+clear A chanidx a
 
 
 
