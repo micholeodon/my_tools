@@ -7,7 +7,12 @@ function fileLocation = searchRecursively(name, src_dir)
 % ASSUMPTION ! Only one file matching name is present in subject directory.
 %
 
-tmp = subdir([src_dir, '/', '*', name, '*.mat']);
+if(isempty(strfind(name, '.mat')))
+    tmp = subdir([src_dir, '/', '*', name, '*.mat']);
+else
+    tmp = subdir([src_dir, '/', '*', name]);
+end
+
 if(numel(tmp) > 1) 
     warning('List of matched files:')
     tmp(:).name
