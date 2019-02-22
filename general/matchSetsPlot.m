@@ -6,6 +6,7 @@ function matchSetsPlot(setA, setB)
 if(~iscellstr(setA)) error('First argument should be cell with strings !'); end
 if(~iscellstr(setB)) error('Second argument should be cell with strings !'); end
 
+x = [0 1];
 matchLine = @(iA,iB) ((iB - iA)*x + iA);
 
 [iA, iB] = match_str(setA, setB);
@@ -13,7 +14,7 @@ maxVal = max([iA;iB]);
 
 figure
 y = matchLine(iA,iB);
-x = [0 1];
+
 plot(x,y)
 grid on
 ylim([0, maxVal+1])
